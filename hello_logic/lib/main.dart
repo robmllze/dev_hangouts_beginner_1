@@ -1,6 +1,21 @@
 import 'dart:convert';
 
+String getFirstName(String fullName) {
+  final names = fullName.split(' ').where((e) => e.isNotEmpty);
+  return names.first;
+}
+
+String getOtherNames(String fullName) {
+  final names = fullName.split(' ').where((e) => e.isNotEmpty).toList();
+  final otherNames = names.sublist(1);
+  final otherNamesString = otherNames.join(' ');
+  return otherNamesString;
+}
+
 void main() async {
+  // print('FIRST NAME: ${getFirstName('John           (Mark) Hudson     ')}');
+  // print('OTHER NAME: ${getOtherNames('   John    (Mark)     Hudson')}');
+
   final userData = await fetchUserData('u_123dsheksj123', '...');
   try {
     final name = userData["name"] as String;
@@ -12,7 +27,6 @@ void main() async {
   } on TypeError catch (e) {
     print('Your data is corrupt!');
   }
-  //print(age + 1);
 }
 
 Future<Map> fetchUserData(String userId, String authToken) async {
